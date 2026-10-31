@@ -1,0 +1,157 @@
+LXNU Architecture Overview
+
+Project: LXNU
+Version: 1.6.6.2ɓ
+Platform: System-One
+Architecture: AMD64
+Status: Specification and architecture definition. Implementation and validation are not yet demonstrated.
+
+1. Mission
+
+LXNU is a Linux-based kernel engineering project that applies selected XNU-inspired architectural principles to an independent AMD64 computing platform.
+
+LXNU does not contain Mach source code or Apple code. It does not attempt to reproduce macOS. Linux upstream remains the foundation for kernel functionality, hardware support, and long-term maintainability.
+
+The objective is a coherent kernel platform with clearly defined subsystem ownership, controlled integration, measurable performance, and strong security boundaries.
+
+2. Architectural Foundation
+
+LXNU uses the upstream Linux kernel for its established core capabilities.
+
+Linux upstream provides:
+
+- CPU architecture initialization and hardware enablement.
+- Task management and process scheduling.
+- Virtual memory and physical memory management.
+- Virtual filesystem and filesystem implementations.
+- Networking and network protocol infrastructure.
+- Device drivers and interrupt handling.
+- Synchronization primitives and core kernel facilities.
+- Hardware and platform support.
+
+LXNU maintains its own architecture, integration contracts, AMD platform policy, configuration, downstream patches, and validation requirements.
+
+It must not duplicate mature Linux functionality without a documented engineering justification.
+
+3. System Ownership
+
+LXNU
+
+Owns kernel architecture, integration interfaces, downstream patch policy, AMD platform integration, security integration, and kernel validation.
+
+OmniRed
+
+Owns workload classification, resource coordination, CPU/GPU/NPU placement policy, power and thermal coordination, and workload scheduling decisions through approved kernel interfaces.
+
+OmniRed does not replace or independently duplicate the Linux scheduler.
+
+OmniSoft
+
+Owns userspace platform integration, runtime services, application-facing interfaces, and operating-system service coordination.
+
+OmniSilicon
+
+Owns AMD hardware discovery, capability reporting, hardware qualification, and validated platform profiles.
+
+Omni Performance Libraries
+
+Own optimized computational operations, runtime-safe instruction dispatch, correctness validation, and fallback implementations.
+
+An enabled optimization is not proof of a performance improvement. Improvements require reproducible measurements.
+
+4. AMD64 Platform Policy
+
+LXNU targets AMD64 systems using supported AMD processors and graphics hardware.
+
+Production capability must be established through hardware discovery and qualification rather than assumptions based on product names.
+
+The userspace baseline is x86-64-v3. More advanced instruction sets, including AVX-512, require runtime feature detection and operating-system state validation before dispatch.
+
+No binary may execute unsupported instructions on an otherwise supported system.
+
+Scalar or lower-ISA fallbacks must remain available wherever required.
+
+5. Kernel and Language Strategy
+
+Linux upstream remains the kernel foundation.
+
+C remains essential for Linux kernel integration and established kernel interfaces. C++ may be used in suitable supporting components outside the Linux kernel. Stable Rust is strategic for appropriate system services, tooling, security-sensitive components, and selected platform infrastructure.
+
+Rust complements C and C++; it does not replace them wholesale.
+
+Production Rust requires pinned stable toolchains, an explicit MSRV policy, reproducible builds, dependency and license audits, security review, unsafe-code review, and testing.
+
+6. Security Architecture
+
+Security must be integrated into the platform rather than added as a collection of unrelated features.
+
+Candidate mechanisms include:
+
+- Linux Security Modules (LSM).
+- Landlock.
+- Kernel Lockdown.
+- Yama.
+- Integrity mechanisms.
+- eBPF-based policy where justified and validated.
+- Least-privilege userspace service boundaries.
+
+Every security mechanism requires configuration review, compatibility testing, and documented validation.
+
+A configured security feature is not automatically a proven security guarantee.
+
+7. Upstream and Source Management
+
+LXNU must track a precisely pinned upstream Linux revision.
+
+Downstream changes must remain separately identifiable, documented, reviewable, and justified.
+
+The project must preserve upstream copyright notices, SPDX identifiers, and source provenance.
+
+LXNU must not claim ownership of upstream Linux code or impose a blanket license on third-party components.
+
+8. Engineering Requirements
+
+Every subsystem must have:
+
+1. A defined owner.
+2. A documented interface.
+3. Explicit dependencies.
+4. Security considerations.
+5. Correctness tests.
+6. Reproducible build requirements.
+7. Performance benchmarks where performance claims are made.
+8. A failure and rollback strategy where applicable.
+
+Architectural complexity must have a measurable purpose.
+
+9. Validation Gates
+
+No component is considered implemented merely because it has been specified.
+
+Validation must include, as applicable:
+
+- Source and configuration audits.
+- Reproducible build verification.
+- Boot and hardware initialization tests.
+- CPU and memory correctness tests.
+- Driver and graphics qualification.
+- Security testing.
+- Workload coordination tests.
+- Regression testing.
+- Performance measurements against documented baselines.
+
+Unexecuted gates remain NOT RUN.
+
+10. Project Status
+
+LXNU 1.6.6.2ɓ is an architectural specification and engineering project.
+
+No implementation, successful kernel build, boot result, performance improvement, or production release is claimed by this document.
+
+Specified. NOT RUN. No gate measured. No component claimed to ship.
+
+---
+
+LXNU — The foundation of System-One.
+
+The freedom to build. The discipline to make it feel simple.
