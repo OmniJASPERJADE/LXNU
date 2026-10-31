@@ -14,7 +14,7 @@ LXNU is the kernel foundation of System-One. It uses the proven Linux kernel as 
 
 It does not contain Mach source code or Apple code. It is not a macOS clone.
 
-Its purpose is to make a powerful, open, AMD-focused computing platform feel coherent.
+Its purpose is to make a powerful, open, dual-architecture computing platform feel coherent.
 
 ## Our principles
 

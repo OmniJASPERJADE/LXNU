@@ -3,7 +3,7 @@ LXNU Kernel Security Policy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Engineering specification
 Execution status: NOT RUN
 
@@ -14,6 +14,8 @@ This document defines the security architecture and engineering requirements for
 LXNU uses upstream Linux security mechanisms and carefully controlled integration policies. Its security model must protect system integrity, isolate workloads, restrict unauthorized access, and preserve recoverability.
 
 Security features must be validated in the running system before their effectiveness is claimed.
+
+Security configuration is validated per architecture. Architecture-specific mitigations and hardware security features are documented and tested separately; a control proven on one architecture is not assumed effective on the other.
 
 2. Security Principles
 

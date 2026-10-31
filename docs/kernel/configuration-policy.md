@@ -3,7 +3,7 @@ LXNU Kernel Configuration Policy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Engineering specification
 Execution status: NOT RUN
 
@@ -42,13 +42,13 @@ LXNU must not introduce competing implementations of upstream scheduler, memory-
 
 4. Architecture Baseline
 
-The production target is AMD64.
+LXNU maintains a separate kernel configuration for each production architecture.
+
+AMD64
 
 The baseline userspace architecture target is x86-64-v3.
 
 Higher instruction-set capabilities must use runtime detection and safe dispatch.
-
-The kernel build must not assume that every supported processor has the same optional instruction-set capabilities.
 
 In particular:
 
@@ -57,7 +57,23 @@ In particular:
 - Validate CPU capabilities and operating-system extended-state support before using advanced instruction sets.
 - Preserve safe fallback paths.
 
-5. AMD Hardware Support
+ARM64
+
+The ARM64 configuration targets the platform baseline of the selected processor, not a
+vendor-specific microarchitecture level.
+
+Processor and SoC selection is not yet made. Configuration must not enable platform-specific
+drivers or features for hardware that has not been selected and documented.
+
+Architecture-specific options must be isolated in the amd64 and arm64 configuration files
+rather than forced into a shared fragment.
+
+Neither configuration may assume that every supported processor has the same optional
+instruction-set capabilities.
+
+5. Platform Hardware Support
+
+AMD64 profile
 
 The intended hardware scope includes:
 
@@ -78,6 +94,16 @@ NPUs
 These are target categories, not a declaration of completed hardware qualification.
 
 Each configuration must be evaluated against the actual upstream kernel version and driver availability.
+
+ARM64 profile
+
+No processor, SoC, GPU, or NPU vendor has been selected for the Soundwave platform.
+
+The ARM64 configuration must therefore enable only generic architecture support and the
+drivers required by the selected platform once that selection is documented. It must not
+pre-populate vendor drivers or adopt an assumed device tree/ACPI description.
+
+Accelerator backends are independently qualified and are not inherited from the AMD64 profile.
 
 6. Kernel Subsystems
 

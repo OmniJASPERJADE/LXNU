@@ -3,7 +3,7 @@ LXNU Reproducible Build and Artifact Integrity Policy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Engineering specification
 Execution status: NOT RUN
 
@@ -14,6 +14,8 @@ This document defines the requirements for reproducible LXNU builds, source prov
 The objective is to ensure that published artifacts can be traced to their source inputs and that independent builds can be compared using documented procedures.
 
 A successful compilation does not automatically establish reproducibility or artifact integrity.
+
+Reproducibility is evaluated independently per architecture and per target triple. Rebuild comparison evidence is recorded separately for amd64 and aarch64 artifacts.
 
 2. Core Principles
 

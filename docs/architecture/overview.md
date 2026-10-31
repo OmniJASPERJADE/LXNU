@@ -3,7 +3,7 @@ LXNU Architecture Overview
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen) and ARM64 (Soundwave)
 Status: Specification and architecture definition. Implementation and validation are not yet demonstrated.
 
 1. Mission
@@ -59,17 +59,33 @@ Own optimized computational operations, runtime-safe instruction dispatch, corre
 
 An enabled optimization is not proof of a performance improvement. Improvements require reproducible measurements.
 
-4. AMD64 Platform Policy
+4. Architecture Platform Policy
+
+LXNU targets two first-class production architectures. The canonical profile definitions are maintained in "Multi-Architecture Profiles" (docs/architecture/architecture-profiles.md).
+
+AMD64 — Ryzen platform
 
 LXNU targets AMD64 systems using supported AMD processors and graphics hardware.
 
-Production capability must be established through hardware discovery and qualification rather than assumptions based on product names.
-
 The userspace baseline is x86-64-v3. More advanced instruction sets, including AVX-512, require runtime feature detection and operating-system state validation before dispatch.
+
+ARM64 — Soundwave platform
+
+LXNU targets native AArch64 systems. Kernel, userspace, and packages are built for aarch64.
+
+The ARM64 processor, SoC, GPU, and NPU vendors are not yet selected. No capability may be assumed from a product name, and no silicon specification may be invented to fill the gap.
+
+Boot firmware and handoff (UEFI, device tree, or ACPI) are documented per selected platform and are not assumed to match AMD64 behavior.
+
+Both profiles
+
+Production capability must be established through hardware discovery and qualification rather than assumptions based on product names.
 
 No binary may execute unsupported instructions on an otherwise supported system.
 
-Scalar or lower-ISA fallbacks must remain available wherever required.
+Scalar or portable fallbacks must remain available wherever required.
+
+A result obtained on one architecture does not apply to the other.
 
 5. Kernel and Language Strategy
 

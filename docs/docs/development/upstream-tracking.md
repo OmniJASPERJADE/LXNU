@@ -3,7 +3,7 @@ LXNU Upstream Linux Tracking and Synchronization Policy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Engineering specification
 Execution status: NOT RUN
 
@@ -14,6 +14,8 @@ This document defines how LXNU tracks, evaluates, integrates, and maintains upst
 LXNU is a Linux-based kernel engineering project shaped by selected XNU-inspired architectural patterns. Upstream Linux remains the foundation for kernel functionality, hardware support, drivers, scheduling, memory management, networking, and filesystems.
 
 LXNU must maintain a controlled relationship with upstream Linux rather than becoming an independently diverging kernel fork.
+
+Both production architectures track the same pinned upstream revision. Architecture-specific configuration and patches are kept separate and do not fork the upstream source tree.
 
 2. Upstream-First Principles
 

@@ -51,6 +51,7 @@ Requirements:
 - Pin the exact production Rust toolchain version.
 - Record the compiler version and toolchain channel.
 - Record host and target architecture information.
+- Record the target triple for each production target: x86_64-linux-gnu and aarch64-linux-gnu.
 - Use controlled and reproducible toolchain upgrades.
 - Prohibit nightly-only language or compiler features in production.
 - Document any required compiler or target-specific configuration.
@@ -330,6 +331,7 @@ FFI and ABI audit| NOT RUN
 Rust CI execution| NOT RUN
 Reproducible Rust build| NOT RUN
 AMD64 target validation| NOT RUN
+ARM64 target validation| NOT RUN
 Performance benchmarking| NOT RUN
 Security validation| NOT RUN
 

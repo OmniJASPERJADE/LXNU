@@ -3,7 +3,7 @@ LXNU Release Engineering Policy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Release process specification
 Execution status: NOT RUN
 
@@ -136,7 +136,10 @@ A channel must not be advertised as operational until its release process exists
 
 6. Hardware Support and Compatibility
 
-Release notes must distinguish:
+Releases are architecture-specific. An AMD64 release does not imply an ARM64 release, and
+validation evidence is not shared between them.
+
+Release notes must distinguish, per architecture:
 
 - Intended hardware targets.
 - Detected hardware.
@@ -146,6 +149,8 @@ Release notes must distinguish:
 - Production-supported configurations.
 
 Hardware not tested against the required acceptance criteria must not be advertised as qualified.
+
+A release for an architecture with no qualified hardware is not a production release.
 
 7. Security and Licensing Review
 

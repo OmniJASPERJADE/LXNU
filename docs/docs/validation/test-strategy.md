@@ -3,7 +3,7 @@ LXNU Testing and Verification Strategy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Engineering specification
 Execution status: NOT RUN
 
@@ -14,6 +14,8 @@ This document defines the testing and verification strategy for LXNU.
 It establishes how engineering requirements are translated into tests, how results are recorded, and how evidence supports integration and release decisions.
 
 Testing must distinguish between source-level correctness, successful compilation, runtime behavior, hardware compatibility, and production qualification.
+
+Tests are executed and recorded per architecture. A result on AMD64 is not evidence for ARM64, and the reverse is equally true. Cross-compiled builds are tested on their target architecture, or in a target-architecture virtual machine where physical hardware is unavailable.
 
 2. Verification Principles
 

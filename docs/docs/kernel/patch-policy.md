@@ -3,7 +3,7 @@ LXNU Kernel Patch Management Policy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Engineering specification
 Execution status: NOT RUN
 
@@ -35,6 +35,7 @@ Every downstream patch must be assigned a category.
 Category| Description
 Architecture| LXNU architecture and integration boundaries
 AMD platform| AMD-specific integration or compatibility
+ARM64 platform| ARM64-specific integration, firmware, or platform compatibility
 Security| Security policy or justified security integration
 Performance| Measured optimization with correctness safeguards
 Compatibility| Required userspace or hardware compatibility
@@ -51,6 +52,7 @@ Every patch must include:
 - Descriptive subject.
 - Technical rationale.
 - Affected subsystem.
+- Applicable architectures (amd64, arm64, or both).
 - Upstream source revision.
 - Author and attribution information.
 - License and copyright preservation.
@@ -59,6 +61,10 @@ Every patch must include:
 - Known limitations.
 
 Patches must be small enough to review and maintain whenever practical.
+
+Architecture-specific patches must be marked as such and must not change behavior on the
+other architecture. Where a change is common to both, it belongs in a shared patch rather than
+two divergent ones.
 
 5. Upstream Linux Synchronization
 

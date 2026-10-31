@@ -3,7 +3,7 @@ LXNU Validation Gates
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Document status: Validation specification
 Execution status: NOT RUN
 
@@ -172,7 +172,41 @@ G12| Performance measurement| NOT RUN
 G13| Regression and reliability| NOT RUN
 G14| Release readiness| NOT RUN
 
-8. Project Status
+8. Architecture Matrices
+
+Every gate is evaluated per architecture. Status is tracked independently: a PASSED result on
+one architecture does not apply to the other, and results are never pooled.
+
+Gate| AMD64| ARM64
+G01| NOT RUN| NOT RUN
+G02| NOT RUN| NOT RUN
+G03| NOT RUN| NOT RUN
+G04| NOT RUN| NOT RUN
+G05| NOT RUN| NOT RUN
+G06| NOT RUN| NOT RUN
+G07| NOT RUN| NOT RUN
+G08| NOT RUN| NOT RUN
+G09| NOT RUN| NOT RUN
+G10| NOT RUN| NOT RUN
+G11| NOT RUN| NOT RUN
+G12| NOT RUN| NOT RUN
+G13| NOT RUN| NOT RUN
+G14| NOT RUN| NOT RUN
+
+8.1 Architecture-specific gates
+
+These gates apply to one architecture only and cannot be satisfied by the other.
+
+Gate| Architecture| Description| Status
+G15| AMD64| x86-64-v4 dispatch with XCR0 extended-state validation| NOT RUN
+G16| ARM64| Firmware and boot handoff: UEFI, device tree, or ACPI contract verified on selected platform| NOT RUN
+G17| ARM64| Architecture feature detection and portable dispatch validation| NOT RUN
+G18| ARM64| Userspace ABI, aarch64 package metadata, and repository integrity| NOT RUN
+G19| ARM64| Platform hardware qualification (CPU, memory, graphics, accelerator)| NOT RUN
+
+A successful cross-compilation satisfies none of G16, G17, or G19.
+
+9. Project Status
 
 This document defines the validation requirements. It does not demonstrate that any gate has been executed.
 

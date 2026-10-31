@@ -1,9 +1,9 @@
-LXNU AMD Hardware Support Matrix
+LXNU Hardware Support Matrix
 
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Hardware support specification
 Qualification status: NOT RUN
 
@@ -19,20 +19,33 @@ Targeted hardware is not the same as verified hardware.
 
 2. Platform Policy
 
-The production platform is AMD64.
+LXNU has two first-class production hardware profiles.
 
-The project targets:
+AMD64 — Ryzen platform
+
+The AMD64 production platform targets:
 
 - AMD Ryzen processors.
 - AMD Radeon RDNA graphics processors.
 - AMD XDNA neural processing units.
 - AMD platform controllers and associated supported devices.
 
-Intel-targeted, ARM, PowerPC, and NVIDIA production platforms are outside the defined LXNU target.
+Intel-targeted and NVIDIA production platforms are outside the defined LXNU target.
+
+ARM64 — Soundwave platform
+
+The ARM64 production platform is a native AArch64 target.
+
+- Processor, SoC, GPU, and NPU vendors are not yet selected.
+- No AMD-specific hardware assumption applies to this profile.
+- Firmware, device tree, or ACPI integration is defined per selected platform.
+- Graphics, compute, and accelerator backends require independent qualification.
 
 Linux upstream remains responsible for established processor architecture support, drivers, memory management, and hardware initialization.
 
 LXNU adds platform integration, capability reporting, qualification policy, and validation.
+
+A qualification result on one architecture does not transfer to the other.
 
 3. CPU Support
 
@@ -211,12 +224,13 @@ gfx1151| Radeon GPU| TARGETED
 gfx12xx| Radeon GPU| TARGETED
 XDNA1| AMD NPU| TARGETED
 XDNA2| AMD NPU| TARGETED
+ARM64 platform| Soundwave, processor/SoC not selected| TARGETED
 
 No hardware family in this table is represented as production-qualified.
 
 12. Current Status
 
-This document defines the intended AMD hardware support and qualification policy.
+This document defines the intended AMD64 and ARM64 hardware support and qualification policy.
 
 No completed hardware qualification, production driver validation, or measured accelerator performance is claimed.
 
@@ -224,4 +238,4 @@ Specified. NOT RUN. No gate measured. No component claimed to ship.
 
 ---
 
-LXNU — AMD-first engineering. Hardware support earned through evidence.
+LXNU — Two production architectures. Evidence earned per architecture.

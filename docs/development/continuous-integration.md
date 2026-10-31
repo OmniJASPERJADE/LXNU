@@ -3,7 +3,7 @@ LXNU Continuous Integration Specification
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: CI architecture specification
 Execution status: NOT RUN
 
@@ -47,10 +47,11 @@ Validate:
 
 - Pinned upstream Linux source retrieval.
 - LXNU patch application.
-- AMD64 kernel configuration.
-- Clang and LLVM toolchain compatibility.
-- Kernel compilation.
-- Artifact metadata and checksums.
+- AMD64 and ARM64 kernel configurations.
+- Clang and LLVM toolchain compatibility, including the cross toolchain for each target.
+- Kernel compilation for each target triple.
+- Artifact metadata and checksums, recorded per architecture.
+- Explicit separation of host architecture from target architecture.
 
 Stage D — Runtime Testing
 
@@ -68,16 +69,18 @@ Virtualized testing does not replace physical AMD hardware qualification.
 
 Stage E — Hardware Qualification
 
-Use dedicated AMD hardware runners to test applicable:
+Use dedicated hardware runners per architecture to test applicable:
 
-- Zen 4 and Zen 5 CPU configurations.
-- Radeon GPU initialization and rendering.
-- XDNA NPU initialization and execution.
+- AMD64: Zen 4 and Zen 5 CPU configurations.
+- AMD64: Radeon GPU initialization and rendering.
+- AMD64: XDNA NPU initialization and execution.
+- ARM64: the selected Soundwave platform once documented.
 - Power and thermal behavior.
 - Suspend and resume.
 - Hardware-specific regressions.
 
-Hardware qualification remains a separate requirement from ordinary CI compilation.
+Hardware qualification remains a separate requirement from ordinary CI compilation, and is
+never inferred from a successful build on another architecture.
 
 3. GitHub Actions
 
@@ -92,7 +95,7 @@ Proposed workflows:
 Workflow| Responsibility
 "repository.yml"| Repository integrity and documentation
 "source.yml"| Upstream source and patch validation
-"kernel-build.yml"| AMD64 kernel compilation
+"kernel-build.yml"| AMD64 and ARM64 kernel compilation
 "static-analysis.yml"| Static checks and configuration review
 "security.yml"| Dependency and security checks
 "reproducibility.yml"| Controlled rebuild comparison

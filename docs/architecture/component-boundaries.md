@@ -2,6 +2,7 @@
 
 **Project:** System-One
 **Architecture version:** Rev I.6 / System-One 1.6.6.2ɓ
+**Production architectures:** AMD64 (Ryzen platform), ARM64 (Soundwave platform)
 **Document status:** Architecture specification — NOT RUN
 **Scope:** System-One OS, LXNU, OmniSoft, OmniRed, OmniSilicon, Omni Performance Libraries
 
@@ -58,19 +59,29 @@ It is responsible for:
 
 ### 3.2 Platform baseline
 
-The production platform targets:
+The production platform has two first-class architecture profiles.
+
+**AMD64 — Ryzen platform**
 - AMD64 architecture.
 - AMD Ryzen processors.
 - AMD Radeon RDNA graphics.
 - AMD XDNA neural processing units where supported.
+- Limine bootloader where the platform firmware permits it.
+
+**ARM64 — Soundwave platform**
+- Native AArch64 architecture.
+- Processor, SoC, GPU, and NPU vendors are not yet selected.
+- Architecture-appropriate boot firmware and handoff, documented per platform.
+- No assumption that AMD RDNA, XDNA, or any specific accelerator is present.
+
+**Shared baseline**
 - Linux 6.18 LTS-based kernel engineering.
 - glibc userspace ABI.
 - apk-tools and APK package format.
 - runit service supervision.
-- Limine bootloader.
 - Wayland graphical environment.
 
-The platform remains independent, with its own package repositories, release process, and integration policies.
+The platform remains independent, with its own package repositories, release process, and integration policies. Repositories and packages are architecture-specific.
 
 ### 3.3 Boot and storage architecture
 
@@ -301,6 +312,17 @@ The platform prioritizes:
 
 OmniSilicon must not assume every AMD processor or GPU exposes identical capabilities.
 
+### 7.5 ARM64 platform requirements
+
+The ARM64 profile is a native production target.
+
+- Processor and SoC selection is an explicit engineering decision and is not yet made.
+- Capability discovery must enumerate the architecture baseline and only those optional
+  features the selected platform actually implements.
+- GPU and NPU support require independently qualified backends; AMDGPU, RADV, and XDNA
+  assumptions do not transfer to this profile.
+- No capability may be advertised on the basis of architecture alone.
+
 ## 8. Omni Performance Libraries
 
 ### 8.1 Ownership
@@ -329,6 +351,9 @@ The validated baseline is x86-64-v3.
 Optional x86-64-v4 execution requires runtime validation of processor feature bits and operating-system extended-state support, including the relevant XCR0 state.
 
 Unsupported instructions must never be executed through an unsafe global compiler assumption.
+
+ARM64 uses its own architecture baseline and its own dispatch rules. x86-64-v3 and x86-64-v4
+do not apply to that profile, and AMD64 dispatch results are not portable to it.
 
 Every optimized path must have a compatible fallback where required.
 

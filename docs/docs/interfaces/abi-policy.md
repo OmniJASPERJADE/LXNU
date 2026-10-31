@@ -3,7 +3,7 @@ LXNU Interface and ABI Stability Policy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Engineering specification
 Execution status: NOT RUN
 
@@ -14,6 +14,8 @@ This policy defines how LXNU identifies, versions, documents, and maintains inte
 It establishes clear boundaries between upstream Linux interfaces, LXNU-owned interfaces, and userspace application binary interfaces.
 
 The purpose is to prevent accidental compatibility promises and uncontrolled coupling between components.
+
+Interfaces are defined per target architecture. AMD64 uses x86_64-linux-gnu; ARM64 uses aarch64-linux-gnu. ABI guarantees, structure layouts, and calling conventions are documented per architecture and are not assumed identical. An architecture-specific interface extension requires review under the same rules as any other interface change.
 
 2. Interface Principles
 

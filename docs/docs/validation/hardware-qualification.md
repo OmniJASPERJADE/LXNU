@@ -3,7 +3,7 @@ LXNU Hardware Qualification Policy
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Architecture: AMD64
+Architectures: AMD64 (Ryzen), ARM64 (Soundwave)
 Status: Engineering specification
 Execution status: NOT RUN
 
@@ -14,6 +14,8 @@ This policy defines the process for evaluating, testing, and qualifying hardware
 It establishes the distinction between intended hardware support, hardware detection, driver availability, functional testing, qualification, and production support.
 
 Listing a processor or device as a target does not establish that it works.
+
+Qualification is performed per architecture. An AMD64 qualification result does not extend to ARM64. No ARM64 processor or platform is currently selected for qualification.
 
 2. Qualification Principles
 
@@ -30,7 +32,7 @@ Hardware qualification must follow these principles:
 
 3. Hardware Scope
 
-LXNU targets AMD64 systems using AMD hardware.
+LXNU targets AMD64 and ARM64 systems using supported hardware.
 
 The intended hardware scope includes:
 

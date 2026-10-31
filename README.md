@@ -1,12 +1,12 @@
 # LXNU
-Linux-based kernel engineering project for System-One OS. AMD64-focused, XNU-inspired architecture built on upstream Linux.
+Linux-based kernel engineering project for System-One OS. AMD64 and ARM64, XNU-inspired architecture built on upstream Linux.
 LXNU
 
 The kernel foundation of System-One.
 
 One platform. One experience. Engineered end to end.
 
-LXNU is an independent Linux kernel engineering project for System-One, an AMD-focused creator computing platform.
+LXNU is an independent Linux kernel engineering project for System-One, a creator computing platform.
 
 It applies selected XNU-inspired architectural principles to the proven Linux kernel foundation. The goal is to build a coherent, high-performance computing platform without sacrificing openness, maintainability, or technical transparency.
 
@@ -58,7 +58,7 @@ These components must use documented interfaces and clearly defined ownership bo
 
 Platform Direction
 
-- Architecture: AMD64
+- Architectures: AMD64 (Ryzen) and ARM64 (Soundwave)
 - CPU: Supported AMD Ryzen processors
 - Graphics: Supported AMD Radeon GPUs
 - AI acceleration: Qualified AMD XDNA hardware
@@ -78,10 +78,21 @@ Engineering Principles
 5. Minimal justified complexity — every subsystem must earn its place.
 6. Evidence before release — specifications, implementation, testing, and verification are distinct stages.
 
+Architecture Profiles
+
+System-One targets two first-class production architectures:
+
+- AMD64 (Ryzen platform): x86-64-v3 baseline, optional runtime-dispatched x86-64-v4.
+- ARM64 (Soundwave platform): native AArch64 target; processor, GPU, and NPU vendors are not yet selected.
+
+Architecture policy is defined once in "Multi-Architecture Profiles" (docs/architecture/architecture-profiles.md).
+
 Documentation
 
 - "Project Manifesto" (docs/manifesto.md)
 - "Architecture Overview" (docs/architecture/overview.md)
+- "Component Boundaries" (docs/architecture/component-boundaries.md)
+- "Multi-Architecture Profiles" (docs/architecture/architecture-profiles.md)
 - "Security Policy" (SECURITY.md)
 - "Contribution Guidelines" (CONTRIBUTING.md)
 - "Validation Gates" (docs/validation/gates.md)

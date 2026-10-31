@@ -3,7 +3,7 @@ LXNU Build and Development Plan
 Project: LXNU
 Version: 1.6.6.2ɓ
 Platform: System-One
-Target architecture: AMD64
+Target architectures: AMD64 (x86_64-linux-gnu), ARM64 (aarch64-linux-gnu)
 Status: Build process specification
 Execution status: NOT RUN
 
@@ -27,7 +27,7 @@ Before each development cycle, the project must:
 2. Record the immutable Git commit.
 3. Verify source provenance and integrity.
 4. Record applicable upstream security fixes.
-5. Review compatibility with required AMD hardware.
+5. Review compatibility with required platform hardware.
 6. Document the reason for selecting that revision.
 
 A version number alone is insufficient to identify a reproducible source tree.
@@ -50,6 +50,8 @@ LXNU/
 │   └── manifesto.md
 ├── kernel/
 │   ├── config/
+│   │   ├── amd64.config
+│   │   └── arm64.config
 │   ├── patches/
 │   └── source.lock
 ├── scripts/
@@ -87,12 +89,18 @@ The target compiler strategy is:
 - Thin LTO where supported and validated.
 - Pinned build-tool versions.
 - Explicit configuration of required kernel build dependencies.
+- Target triples: `x86_64-linux-gnu` and `aarch64-linux-gnu`.
 
 The exact toolchain must be recorded for every build.
 
+Each architecture has its own configuration, artifact namespace, and build log. Host and target
+architecture are recorded separately for cross-compiled builds, and the cross toolchain is
+pinned independently of the host toolchain.
+
 A newer compiler is not automatically a better or compatible compiler.
 
-Compiler upgrades require build, boot, correctness, and regression testing.
+Compiler upgrades require build, boot, correctness, and regression testing on each target
+architecture independently. A cross-compilation success is not evidence of a successful boot.
 
 6. CPU Optimization Policy
 
@@ -133,18 +141,23 @@ Experimental options must not silently become production requirements.
 
 8. Build Procedure
 
+Each architecture is built from its own configuration, into its own artifact directory, with
+its own recorded metadata. A build for one target never reuses another target's artifacts as
+evidence.
+
 The intended development sequence is:
 
-1. Retrieve the pinned upstream Linux source.
-2. Verify source integrity.
-3. Apply the reviewed LXNU patch set.
-4. Load the version-controlled kernel configuration.
-5. Validate toolchain and build dependencies.
-6. Compile for AMD64.
-7. Preserve build logs and metadata.
-8. Inspect generated artifacts.
-9. Run static and configuration checks.
-10. Proceed to boot and hardware testing only after the build passes.
+1. Select the target architecture (amd64 or arm64).
+2. Retrieve the pinned upstream Linux source.
+3. Verify source integrity.
+4. Apply the reviewed LXNU patch set.
+5. Load the version-controlled kernel configuration for that architecture.
+6. Validate toolchain and build dependencies.
+7. Compile for the selected target.
+8. Preserve build logs and metadata.
+9. Inspect generated artifacts.
+10. Run static and configuration checks.
+11. Proceed to boot and hardware testing only after the build passes.
 
 The exact commands will be maintained in version-controlled build scripts after the environment has been qualified.
 
