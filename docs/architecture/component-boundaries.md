@@ -10,7 +10,7 @@
 
 This document establishes the architectural ownership, responsibilities, interfaces, and integration boundaries of the System-One platform.
 
-System-One is an independent AMD64 Linux-based operating system and computing platform. Its architecture integrates a custom kernel engineering project, userspace software platform, workload orchestration, AMD hardware integration, and optimized performance libraries.
+System-One is an independent AMD64 Linux-based operating system and computing platform. Its architecture integrates a custom kernel engineering project, userspace software platform, workload orchestration, hardware capability discovery, and optimized subsystem libraries.
 
 The objective is to establish one coherent platform without duplicating responsibilities, creating competing control systems, or introducing undocumented dependencies.
 
@@ -32,7 +32,7 @@ System-One consists of six primary architectural domains.
 |---|---|
 | System-One OS | Complete operating system integration and user experience |
 | LXNU | Kernel architecture and Linux upstream integration |
-| OmniSoft | Userspace platform and software runtime |
+| OmniSoft | Computer AI Research Foundation |
 | OmniRed | Workload orchestration and resource coordination |
 | OmniSilicon | AMD hardware discovery and qualification |
 | Omni Performance Libraries | Optimized computational and media operations |
@@ -177,26 +177,27 @@ The selection and activation of each mechanism require compatibility testing and
 
 ### 5.1 Ownership
 
-OmniSoft owns the System-One userspace software platform.
+OmniSoft owns the System-One userspace software platform and the Computer AI Research Foundation.
 
-It is the primary software environment through which system services, runtime facilities, application integration, and platform APIs are delivered.
+It is the primary AI research and computational research environment through which system services, runtime facilities, application integration, platform APIs, and research infrastructure are delivered.
 
 ### 5.2 Responsibilities
 
 OmniSoft owns:
-- Userspace runtime architecture.
-- System service integration.
+- AI research and computational research architecture.
+- Research runtime facilities and execution services.
+- AI model and algorithm integration infrastructure.
+- Userspace platform and software runtime.
 - Application-facing platform interfaces.
-- Software packaging integration.
+- System service integration.
 - Runtime compatibility.
-- Application lifecycle integration.
 - Developer-facing platform facilities.
 - Userspace hardware abstraction interfaces.
 - Platform libraries and supporting utilities.
 
 ### 5.3 Application and software integration
 
-OmniSoft provides the integration environment for the System-One application ecosystem.
+OmniSoft provides the integration environment for the System-One application and research ecosystem.
 
 This includes appropriate integration with:
 - OmniWorks.
@@ -205,8 +206,9 @@ This includes appropriate integration with:
 - Director's Cut.
 - Other creator and productivity applications.
 - System utilities and development tools.
+- AI research frameworks and execution environments.
 
-Applications must consume documented platform APIs.
+Applications and research workloads must consume documented platform APIs.
 
 Applications must not directly assume ownership of kernel scheduling, hardware power policy, or system-wide resource allocation.
 
@@ -317,10 +319,8 @@ OmniSilicon must not assume every AMD processor or GPU exposes identical capabil
 The ARM64 profile is a native production target.
 
 - Processor and SoC selection is an explicit engineering decision and is not yet made.
-- Capability discovery must enumerate the architecture baseline and only those optional
-  features the selected platform actually implements.
-- GPU and NPU support require independently qualified backends; AMDGPU, RADV, and XDNA
-  assumptions do not transfer to this profile.
+- Capability discovery must enumerate the architecture baseline and only those optional features the selected platform actually implements.
+- GPU and NPU support require independently qualified backends; AMDGPU, RADV, and XDNA assumptions do not transfer to this profile.
 - No capability may be advertised on the basis of architecture alone.
 
 ## 8. Omni Performance Libraries
@@ -352,8 +352,7 @@ Optional x86-64-v4 execution requires runtime validation of processor feature bi
 
 Unsupported instructions must never be executed through an unsafe global compiler assumption.
 
-ARM64 uses its own architecture baseline and its own dispatch rules. x86-64-v3 and x86-64-v4
-do not apply to that profile, and AMD64 dispatch results are not portable to it.
+ARM64 uses its own architecture baseline and its own dispatch rules. x86-64-v3 and x86-64-v4 do not apply to that profile, and AMD64 dispatch results are not portable to it.
 
 Every optimized path must have a compatible fallback where required.
 
@@ -368,8 +367,6 @@ Benchmarks must identify hardware, software versions, workload, measurement meth
 An optimized code path is not automatically a faster code path.
 
 ## 9. Cross-Component Integration Contracts
-
-The primary integration relationships are:
 
 | Provider | Consumer | Contract |
 |---|---|---|
@@ -394,6 +391,36 @@ All interfaces must define:
 - Validation requirements.
 
 No private implementation detail should become a public interface without explicit review.
+
+## 9.1 Language Responsibilities and Strategic Policy
+
+System-One adopts a single platform language policy across all primary engineering domains:
+
+- C, C++, and Rust are the only strategic implementation languages for System-One.
+- Language selection is determined by subsystem responsibility, ABI requirements, safety constraints, compatibility needs, and maintenance model.
+- C remains essential for Linux kernel integration, low-level interfaces, drivers, and performance-critical low-level implementation.
+- C++ is appropriate for orchestration, service logic, desktop shell and graphical integration, and performance-sensitive userspace components.
+- Rust is complementary and is used where memory safety, maintainability, and supported tooling justify its adoption, without replacing C or C++ wholesale.
+- No subsystem may adopt a language merely for trend or branding; engineering requirements and compatibility constraints govern the choice.
+- The strategic implementation-language restriction does not prohibit ancillary scripting, configuration, build-description, test, or documentation languages where technically justified.
+
+Subsystem language allocation:
+
+| Subsystem | Primary language policy |
+|---|---|
+| LXNU | C-first for Linux kernel integration, drivers, and low-level interfaces; Rust only within supported Linux kernel integration constraints. |
+| OmniSoft | Computer AI Research Foundation. C, C++, and Rust selected according to AI research, computational architecture, runtime engineering, hardware acceleration, and system integration requirements. |
+| OmniRed | C++ for orchestration and service logic; Rust for appropriate safe infrastructure; C interfaces where required. |
+| OmniSilicon | C/C++ for hardware interfaces and integration; Rust for suitable management and control components. |
+| Omni Performance Libraries | C/C++ for performance-critical implementations; Rust for appropriate safe infrastructure and dispatch. |
+| Photon | C++ for Qt6 shell and graphical integration; C or Rust for justified supporting components. |
+| OrbionFS | C/Rust according to kernel integration, filesystem interfaces, and safety requirements. |
+| System-One OS | Consistent language, ABI, toolchain, dependency, and validation policies across the platform. |
+
+Additional constraints:
+- C++ is a userspace implementation language and must not be introduced into Linux kernel source code. Kernel integration must follow upstream Linux language, interface, and toolchain constraints.
+- Rust kernel code remains conditional on supported kernel Rust infrastructure, compatible toolchains, and documented integration boundaries.
+- Language choice does not replace design review, dependency review, licensing review, or validation evidence.
 
 ## 10. Security and Trust Boundaries
 
@@ -483,7 +510,7 @@ System-One is engineered as one integrated platform with distinct, accountable c
 
 LXNU provides the kernel foundation.
 
-OmniSoft provides the userspace software platform.
+OmniSoft provides the AI research and computational research platform.
 
 OmniRed coordinates workloads and heterogeneous resources.
 

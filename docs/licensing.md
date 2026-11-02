@@ -85,6 +85,7 @@ Prefer maintainable patches and documented integration interfaces.
 Language choice does not remove licensing obligations.
 
 Rust crates, C libraries, C++ libraries, build tools, and generated code must undergo dependency and license review.
+The same provenance, source-review, security-review, and licensing obligations apply across C, C++, and Rust.
 
 Production dependency management must include:
 
@@ -94,6 +95,8 @@ Production dependency management must include:
 - Security vulnerability review.
 - Reproducible build considerations.
 - Documentation of exceptions.
+
+Language selection must not be used to evade dependency provenance or license review.
 
 8. Binary and Package Distribution
 

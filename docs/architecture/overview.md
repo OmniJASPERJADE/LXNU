@@ -8,7 +8,7 @@ Status: Specification and architecture definition. Implementation and validation
 
 1. Mission
 
-LXNU is a Linux-based kernel engineering project that applies selected XNU-inspired architectural principles to an independent AMD64 computing platform.
+LXNU is a Linux-based kernel engineering project that applies selected XNU-inspired architectural principles to an independent System-One computing platform that supports dual production profiles: AMD64 Ryzen and ARM64 Soundwave.
 
 LXNU does not contain Mach source code or Apple code. It does not attempt to reproduce macOS. Linux upstream remains the foundation for kernel functionality, hardware support, and long-term maintainability.
 
@@ -91,9 +91,19 @@ A result obtained on one architecture does not apply to the other.
 
 Linux upstream remains the kernel foundation.
 
-C remains essential for Linux kernel integration and established kernel interfaces. C++ may be used in suitable supporting components outside the Linux kernel. Stable Rust is strategic for appropriate system services, tooling, security-sensitive components, and selected platform infrastructure.
+C, C++, and Rust are the only strategic implementation languages for System-One.
 
-Rust complements C and C++; it does not replace them wholesale.
+Language selection is determined by subsystem responsibility, ABI requirements, operating constraints, safety needs, and maintenance model.
+
+C remains essential for Linux kernel integration, low-level interfaces, drivers, and performance-critical low-level implementation.
+C++ is appropriate for orchestration, service logic, desktop and graphical integration, and performance-sensitive userspace components.
+Rust is complementary and is used where memory safety, maintainability, and supported tooling justify its adoption, without replacing C or C++ wholesale.
+
+Important constraints:
+- C++ is a userspace implementation language and must not be introduced into Linux kernel source code. Kernel integration must follow upstream Linux language, interface, and toolchain constraints.
+- Rust kernel code remains conditional on actual upstream Rust-for-Linux infrastructure and supported kernel configuration.
+- No subsystem may adopt a language merely for trend or branding; engineering requirements and compatibility constraints govern the choice.
+- The strategic implementation-language restriction does not prohibit ancillary scripting, configuration, build-description, test, or documentation languages where technically justified.
 
 Production Rust requires pinned stable toolchains, an explicit MSRV policy, reproducible builds, dependency and license audits, security review, unsafe-code review, and testing.
 

@@ -8,7 +8,7 @@ One platform. One experience. Engineered end to end.
 
 LXNU is an independent Linux kernel engineering project for System-One, a creator computing platform.
 
-It applies selected XNU-inspired architectural principles to the proven Linux kernel foundation. The goal is to build a coherent, high-performance computing platform without sacrificing openness, maintainability, or technical transparency.
+It applies selected XNU-inspired architectural principles to the proven Linux kernel foundation. The goal is to build a coherent, high-performance computing platform without sacrificing openness, transparency, or maintainability.
 
 LXNU is not macOS. It is not a Mach kernel port. It contains no Mach source code or Apple code.
 
@@ -48,7 +48,7 @@ LXNU is designed to work with the wider System-One platform.
 Component| Responsibility
 LXNU| Kernel architecture and integration
 OmniRed| Workload and resource coordination
-OmniSoft| Userspace platform and runtime
+OmniSoft| Computer AI Research Foundation
 OmniSilicon| AMD hardware discovery and qualification
 Omni Performance Libraries| Optimized operations and runtime dispatch
 Photon| Desktop and graphical experience
@@ -59,31 +59,35 @@ These components must use documented interfaces and clearly defined ownership bo
 Platform Direction
 
 - Architectures: AMD64 (Ryzen) and ARM64 (Soundwave)
-- CPU: Supported AMD Ryzen processors
-- Graphics: Supported AMD Radeon GPUs
-- AI acceleration: Qualified AMD XDNA hardware
+- AMD64 profile: supported AMD Ryzen processors; supported AMD Radeon GPUs where applicable; qualified AMD XDNA hardware where supported.
+- ARM64 profile: native AArch64 target; SoC, graphics, accelerator, firmware, and driver selections remain explicitly unqualified until a target platform is approved.
 - Kernel foundation: Upstream Linux
-- Languages: C, C++, and stable Rust where appropriate
+- Language policy: See Language Policy below.
 - Optimization: Runtime-safe instruction dispatch and validated fallbacks
 - Security: Linux security infrastructure with explicit policy and testing
 
 Advanced processor instructions and hardware accelerators are enabled only when the required capabilities are detected and validated.
 
-Engineering Principles
+Language Policy
 
-1. Integration over fragmentation — components must work together through defined contracts.
-2. Measured performance — no speedup claims without reproducible benchmarks.
-3. Security by design — security requirements belong in architecture and implementation.
-4. Upstream respect — preserve Linux provenance, licensing, and maintainability.
-5. Minimal justified complexity — every subsystem must earn its place.
-6. Evidence before release — specifications, implementation, testing, and verification are distinct stages.
+C, C++, and Rust are the only strategic implementation languages for System-One.
+
+Language selection is determined by subsystem responsibility, ABI requirements, safety needs, operating constraints, and maintenance model.
+
+C remains essential for Linux kernel integration, low-level interfaces, drivers, and performance-critical low-level implementation.
+C++ is appropriate for orchestration, service logic, desktop and graphical integration, and performance-sensitive userspace components.
+Rust is complementary and is used where memory safety, maintainability, and supported tooling justify its adoption, without replacing C or C++ wholesale.
+
+The strategic implementation-language restriction does not prohibit ancillary scripting, configuration, build-description, test, or documentation languages where technically justified. Such languages do not become strategic implementation languages or establish ownership of platform subsystems.
+
+No subsystem may adopt a language merely for trend or branding; engineering requirements and compatibility constraints govern the choice.
 
 Architecture Profiles
 
 System-One targets two first-class production architectures:
 
-- AMD64 (Ryzen platform): x86-64-v3 baseline, optional runtime-dispatched x86-64-v4.
-- ARM64 (Soundwave platform): native AArch64 target; processor, GPU, and NPU vendors are not yet selected.
+- AMD64 (Ryzen platform): x86-64-v3 baseline, optional runtime-dispatched x86-64-v4; supported AMD Ryzen processors; supported AMD Radeon GPUs where applicable; qualified AMD XDNA hardware where supported.
+- ARM64 (Soundwave platform): native AArch64 target; processor, GPU, NPU, firmware, and driver selections remain explicitly unselected until an approved target platform is defined. AMD-specific assumptions do not transfer to this profile.
 
 Architecture policy is defined once in "Multi-Architecture Profiles" (docs/architecture/architecture-profiles.md).
 

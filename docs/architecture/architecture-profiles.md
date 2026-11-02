@@ -103,6 +103,26 @@ configuration. Discovery failure must report "unknown" or "unsupported", never "
   stable toolchains.
 - Reproducible builds are required per architecture, with independent rebuild comparison.
 
+6.1 Language and Toolchain Policy
+
+System-One adopts a single strategic language policy across both production profiles:
+
+- C, C++, and Rust are the only strategic implementation languages for System-One.
+- Language selection is determined by subsystem responsibility, ABI requirements, operating constraints, safety needs, and maintenance model.
+- C remains essential for Linux kernel integration, low-level interfaces, drivers, and performance-critical low-level implementation.
+- C++ is a userspace implementation language and must not be introduced into Linux kernel source code. Kernel integration must follow upstream Linux language, interface, and toolchain constraints.
+- Rust is complementary and is used where memory safety, maintainability, and supported tooling justify its adoption, without replacing C or C++ wholesale.
+- No subsystem may adopt a language merely for trend or branding; engineering requirements and compatibility constraints govern the choice.
+- The strategic implementation-language restriction does not prohibit ancillary scripting, configuration, build-description, test, or documentation languages where technically justified.
+
+Architecture-specific constraints:
+- AMD64 and ARM64 both follow the same strategic language policy.
+- Compiler and linker versions must be pinned per profile and recorded in build metadata.
+- Rust toolchain policy remains tied to supported stable versions and reviewed dependencies.
+- A subsystem must document its language choice, toolchain version, safety review status, dependency review status, and validation requirements.
+
+This policy applies to both AMD64 Ryzen and ARM64 Soundwave production targets.
+
 7. Validation
 
 - Gates G01–G14 in the validation specification apply to each architecture independently.

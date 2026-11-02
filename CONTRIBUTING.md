@@ -21,12 +21,13 @@ Do not assume that a proposed feature has been approved simply because it appear
 
 Contributions must follow these principles:
 
-- AMD64 is the production architecture target.
+- AMD64 Ryzen and ARM64 Soundwave are both production architecture targets.
 - Linux upstream remains the kernel foundation.
 - LXNU must not duplicate established Linux functionality without justification.
 - System components must have clearly defined ownership.
 - Interfaces and dependencies must be documented.
 - Security and reliability take priority over unnecessary complexity.
+- Architecture-specific requirements remain profile-specific; AMD-specific assumptions must not be applied to ARM64.
 - Performance claims require reproducible measurements.
 - Unimplemented specifications must not be presented as completed features.
 
@@ -47,13 +48,19 @@ Do not remove upstream copyright notices or SPDX identifiers.
 
 Use the language appropriate to the component.
 
-- C: Linux kernel integration and established kernel subsystems.
-- C++: Suitable supporting components and performance-oriented software.
-- Rust: Appropriate system services, tooling, and components where memory safety and maintainability justify its use.
+- C: Linux kernel integration, low-level interfaces, drivers, and performance-critical low-level implementation.
+- C++: Orchestration, service logic, desktop-shell and graphical integration, and performance-sensitive userspace software.
+- Rust: Appropriate system services, infrastructure, and components where memory safety, maintainability, and supported tooling justify its use.
 
 Production Rust must use stable toolchains and an explicit MSRV policy.
 
 Rust contributions require dependency review, license auditing, reproducible builds, testing, and additional scrutiny for unsafe code.
+
+C, C++, and Rust are the only strategic implementation languages for System-One.
+Language selection is determined by subsystem responsibility, ABI requirements, safety constraints, compatibility needs, and maintenance model.
+No subsystem may adopt a language merely for trend or branding; engineering requirements and compatibility constraints govern the choice.
+
+The strategic implementation-language restriction does not prohibit ancillary scripting, configuration, build-description, test, or documentation languages where technically justified.
 
 5. Code Quality
 

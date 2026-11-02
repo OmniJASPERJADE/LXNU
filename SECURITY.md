@@ -93,6 +93,13 @@ Every security-sensitive change should include:
 5. Documented limitations.
 6. Evidence supporting any security claims.
 
+Language-aware risk review:
+- C, C++, and Rust are the only strategic implementation languages for System-One.
+- Each subsystem must document its selected language(s), toolchain policy, unsafe-code review status, and dependency review status.
+- Memory-safety claims must be supported by code review, static analysis, tests, and toolchain configuration.
+- A language choice does not eliminate the need for security review; it changes the review model.
+- The strategic implementation-language restriction does not prohibit ancillary scripting, configuration, build-description, test, or documentation languages where technically justified.
+
 Security validation results must distinguish between specified, implemented, tested, and independently verified capabilities.
 
 8. Current Security Status

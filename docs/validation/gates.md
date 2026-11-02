@@ -40,6 +40,21 @@ Verify compiler versions, linker versions, build configuration, dependency versi
 
 Acceptance: The build environment is pinned and documented, and reproducibility results are recorded.
 
+Language and Toolchain Policy Validation
+
+Every subsystem must document:
+- selected implementation language(s)
+- technical justification
+- compiler and linker versions
+- Rust MSRV where applicable
+- target architecture and ABI requirements
+- kernel/userspace boundary where relevant
+- dependency provenance and licensing
+- memory-safety and concurrency review status
+- validation strategy and reproducible-build requirements
+
+Acceptance: the subsystem's language choice and toolchain policy are documented, pinned, and consistent with the System-One strategic language policy.
+
 G03 — AMD64 Architecture
 
 Verify AMD64 boot compatibility, CPU identification, supported platform initialization, and architecture-specific assumptions.

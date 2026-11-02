@@ -35,12 +35,14 @@ Every subsystem must justify its complexity, resource consumption, maintenance c
 
 ## The engineering standard
 
-- AMD64-first platform engineering.
+- Dual-profile platform engineering: AMD64 Ryzen and ARM64 Soundwave are both first-class production targets.
 - Linux upstream as the kernel foundation.
 - Stable and documented interfaces.
 - Security designed into architecture.
 - Reproducible builds and traceable source provenance.
-- C and C++ where appropriate; stable Rust where it improves safety and maintainability.
+- C, C++, and Rust are the only strategic implementation languages for System-One.
+- Language selection is responsibility-based and architecture-aware; Rust complements C and C++ without replacing them wholesale.
+- No subsystem may adopt a language merely for trend or branding; engineering requirements and compatibility constraints govern the choice.
 - No unsupported performance claims.
 - No implementation claims without evidence.
 
