@@ -39,7 +39,7 @@ Linux provides the established core:
 - Networking and device drivers.
 - Interrupt handling and synchronization.
 
-LXNU defines its own architecture, integration contracts, AMD platform policies, downstream patch management, and validation requirements.
+LXNU defines its own architecture, integration contracts, dual-profile platform policies for AMD64 Ryzen and ARM64 Soundwave, downstream patch management, and validation requirements.
 
 System-One Integration
 
@@ -49,7 +49,7 @@ Component| Responsibility
 LXNU| Kernel architecture and integration
 OmniRed| Workload and resource coordination
 OmniSoft| Computer AI Research Foundation
-OmniSilicon| AMD hardware discovery and qualification
+OmniSilicon| Hardware discovery and qualification across selected platform profiles
 Omni Performance Libraries| Optimized operations and runtime dispatch
 Photon| Desktop and graphical experience
 OrbionFS| Unified storage orchestration
