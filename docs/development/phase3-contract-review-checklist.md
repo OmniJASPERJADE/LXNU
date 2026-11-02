@@ -57,19 +57,21 @@ Checklist:
 - [x] Versioning and compatibility rules are defined.
 - [x] Security boundaries are documented.
 
-Disposition: PENDING
+Disposition: CHANGES REQUIRED
 Findings:
-- The contract lays out the intended ownership and dependency model correctly.
-- The document is structurally sound as an engineering specification, but it has not yet received a formal review decision.
+- The dependency sequence is directionally correct, but it is not yet a sufficiently explicit dependency graph.
+- The document specifies an eighth deliverable (AMD64 and ARM64 hardware and firmware boundary matrices) that is not yet present in the branch.
+- The contract remains a foundation specification, not a validated interface set.
 
 Required changes:
-- Record the formal reviewer and date.
-- Validate completion of any unresolved contract findings before issuance of APPROVED.
+- Add the missing profile-specific hardware and firmware boundary matrices.
+- Formalize the dependency graph and cross-subsystem contract references.
+- Assign reviewer and review date.
 
 Reviewer: Unassigned
 Review date: Not recorded
-Evidence: Document inspection; architecture ownership mapping; dependency model defined in the file
-Final rationale: Correct direction but not yet formally accepted
+Evidence: Document inspection and architecture ownership mapping only; no completed validation
+Final rationale: Useful engineering foundation, but not yet formally approved and still missing explicit dependency graph and profile matrices
 
 ## 4.2 Kernel and userspace ABI
 
@@ -83,19 +85,20 @@ Checklist:
 - [x] AMD64 Ryzen and ARM64 Soundwave are independently specified.
 - [x] Security, permissions, and failure behavior are addressed.
 
-Disposition: PENDING
+Disposition: CHANGES REQUIRED
 Findings:
-- The boundary is well-defined conceptually.
-- ABI-specific review is still required before any implementation authorization.
+- The boundary is clearly described at a conceptual level.
+- Concrete data-layout, calling-convention, compatibility, and versioning requirements are still too high-level for formal acceptance.
 
 Required changes:
-- Assign a reviewer and a review date.
-- Confirm ABI review gate ownership and acceptance criteria.
+- Define explicit ABI data layout rules and calling conventions.
+- Define compatibility and versioning requirements for syscall and userspace interfaces.
+- Assign reviewer and review date.
 
 Reviewer: Unassigned
 Review date: Not recorded
-Evidence: Kernel/userspace ownership and security boundaries defined in the document
-Final rationale: Good specification, but not yet validated as an accepted ABI contract
+Evidence: Document inspection only; no ABI validation evidence recorded
+Final rationale: Conceptually sound, but not yet complete enough for implementation approval
 
 ## 4.3 System-One runtime services
 
@@ -108,19 +111,20 @@ Checklist:
 - [x] Failure isolation and resource handling are specified.
 - [x] Kernel responsibilities are not duplicated in userspace.
 
-Disposition: PENDING
+Disposition: CHANGES REQUIRED
 Findings:
-- The runtime service boundaries are clearly described.
-- Review completion and acceptance criteria are still pending.
+- Ownership and lifecycle boundaries are clear.
+- Service supervision, dependency ordering, and rollback behavior need more precise contract wording.
 
 Required changes:
+- Define precise service supervision ordering and dependency sequencing.
+- Specify rollback and failure isolation rules for runtime services.
 - Assign reviewer and review date.
-- Confirm service integration and rollback policies for the platform runtime.
 
 Reviewer: Unassigned
 Review date: Not recorded
-Evidence: Runtime ownership and integration boundaries described in the document
-Final rationale: Good service boundary model, but not yet formally reviewed
+Evidence: Document inspection only; no runtime validation evidence recorded
+Final rationale: Good boundary model, but contract detail still requires formal review and tightening
 
 ## 4.4 OmniRed orchestration
 
@@ -134,19 +138,20 @@ Checklist:
 - [x] Resource contention and failure handling are addressed.
 - [x] AMD64 and ARM64 backend differences are respected.
 
-Disposition: PENDING
+Disposition: CHANGES REQUIRED
 Findings:
-- The orchestration model correctly preserves LXNU scheduling ownership.
-- Formal contract review is still outstanding.
+- Placement and scheduler boundaries are clear.
+- Policy interfaces, resource controls, and contention handling need stronger specification.
 
 Required changes:
-- Record reviewer and review date.
-- Confirm orchestration failure and escalation paths are accepted.
+- Define explicit policy interfaces and resource-control semantics.
+- Specify contention-handling and de-escalation behavior.
+- Assign reviewer and review date.
 
 Reviewer: Unassigned
 Review date: Not recorded
-Evidence: Scheduler boundary and orchestration policy described in the document
-Final rationale: Contract direction is sound but still pending formal review
+Evidence: Document inspection only; no orchestration validation evidence recorded
+Final rationale: Direction is correct, but not yet detailed enough for approval
 
 ## 4.5 OmniSilicon capability contract
 
@@ -160,19 +165,20 @@ Checklist:
 - [x] ARM64 hardware support requires independent vendor and device qualification.
 - [x] Missing hardware, firmware, or driver support has defined behavior.
 
-Disposition: PENDING
+Disposition: CHANGES REQUIRED
 Findings:
-- Capability semantics are clearly defined.
-- Formal review and evidence assignment are still required before approval.
+- Capability states are identified, but state transitions and evidence requirements need explicit formal definition.
+- A capability must not be treated as validated based only on discovery.
 
 Required changes:
+- Define formal state transition rules and evidence requirements.
+- Define the criteria for moving from runtime usable to validated in scope.
 - Assign reviewer and review date.
-- Define acceptance criteria for qualification evidence before a capability transitions to validated.
 
 Reviewer: Unassigned
 Review date: Not recorded
-Evidence: Capability-state semantics and profile-specific rules defined in the document
-Final rationale: Capability model is well specified; formal review and evidence gate remain open
+Evidence: Document inspection only; no hardware qualification evidence recorded
+Final rationale: Capability semantics are promising but still require formal evidence and state-transition definition
 
 ## 4.6 OmniSoft AI runtime boundaries
 
@@ -187,19 +193,19 @@ Checklist:
 - [x] AI runtime dependencies and accelerator interfaces are documented.
 - [x] Unsupported hardware and runtime paths have defined fallbacks.
 
-Disposition: PENDING
+Disposition: CHANGES REQUIRED
 Findings:
-- AI runtime ownership and isolation are clearly described.
-- Formal review and approval are still pending.
+- Ownership is clear, but runtime isolation, data handling, and accelerator-failure behavior need more explicit acceptance criteria.
 
 Required changes:
+- Define runtime isolation and data-handling boundaries.
+- Define failure handling for accelerator loss or degraded AI execution.
 - Assign reviewer and review date.
-- Confirm AI runtime fallback and failure escalation criteria.
 
 Reviewer: Unassigned
 Review date: Not recorded
-Evidence: AI runtime boundary and dependency model defined in the document
-Final rationale: Design direction is sensible, but approval is pending formal review
+Evidence: Document inspection only; no AI runtime validation evidence recorded
+Final rationale: Good conceptual separation, but insufficiently precise for approval
 
 ## 4.7 Omni Performance Libraries dispatch
 
@@ -215,33 +221,38 @@ Checklist:
 - [x] ARM64 uses independently qualified native implementations.
 - [x] Correctness and numerical equivalence requirements are documented.
 
-Disposition: PENDING
+Disposition: CHANGES REQUIRED
 Findings:
-- The dispatch and fallback model is strong as a design contract.
-- Formal review and evidence expectations are still pending.
+- Scalar fallback is specified, but the AMD64 x86-64-v3 baseline, optional x86-64-v4 dispatch, and OS extended-state checks need to be explicit in the contract itself.
+- Contract is still not a complete implementation-ready dispatch policy.
 
 Required changes:
+- Make the x86-64-v3 and optional x86-64-v4 baseline requirements explicit in the contract.
+- Specify OS extended-state and runtime feature-detection acceptance criteria.
 - Assign reviewer and review date.
-- Confirm fallback validation and architecture-specific acceptance criteria.
 
 Reviewer: Unassigned
 Review date: Not recorded
-Evidence: Feature detection, fallback safety, and cross-profile dispatch policy defined in the document
-Final rationale: Good contract specification, but not formally accepted yet
+Evidence: Document inspection only; no performance or dispatch validation evidence recorded
+Final rationale: Good safety intent, but not yet explicit enough for formal acceptance
 
 5. Cross-contract review gates
 
+The following items represent document-level inspection only. They do not constitute completed validation or evidence-backed approval.
+
 Checklist:
-- [x] No conflicting subsystem ownership.
-- [x] No circular dependency between subsystems.
-- [x] No unauthorized kernel responsibilities assigned to userspace.
-- [x] No unauthorized hardware assumptions across architecture profiles.
-- [x] ABI and interface versioning policies are compatible.
-- [x] Security and failure boundaries are consistent.
-- [x] Dependency provenance and licensing requirements are addressed.
-- [x] Stable toolchain and reproducible-build requirements are addressed.
-- [x] Performance claims require reproducible measurements.
-- [x] Validation claims require recorded evidence.
+- [ ] Document-level review confirms no conflicting subsystem ownership.
+- [ ] Document-level review confirms no circular dependency between subsystems.
+- [ ] Document-level review confirms no unauthorized kernel responsibilities assigned to userspace.
+- [ ] Document-level review confirms no unauthorized hardware assumptions across architecture profiles.
+- [ ] Document-level review confirms ABI and interface versioning policies are compatible.
+- [ ] Document-level review confirms security and failure boundaries are consistent.
+- [ ] Document-level review confirms dependency provenance and licensing requirements are addressed.
+- [ ] Document-level review confirms stable toolchain and reproducible-build requirements are addressed.
+- [ ] Document-level review confirms performance claims require reproducible measurements.
+- [ ] Document-level review confirms validation claims require recorded evidence.
+
+These are inspection observations only. They do not replace executed validation or evidence-backed acceptance.
 
 6. Validation and evidence register
 
@@ -265,20 +276,20 @@ Overall Phase 3 disposition: CHANGES REQUIRED
 
 Checklist status:
 - [x] All seven contracts are cataloged.
-- [x] All contract dispositions are captured as PENDING or CHANGES REQUIRED.
+- [x] All contract dispositions are captured as CHANGES REQUIRED or PENDING.
 - [x] Outstanding findings are documented.
 - [x] Validation responsibilities remain explicitly unassigned and unexecuted.
-- [ ] Final review decisions are recorded for all seven contracts.
+- [ ] Final review decisions are recorded for all seven contracts with reviewer names and dates.
 - [ ] Outstanding findings are resolved.
 - [ ] Remaining validation gates have assigned owners and acceptance criteria.
 
 Final decision: PENDING until the formal review is complete.
 
 Outstanding blockers:
-1. The Phase 3 contract review checklist must be committed to phase3-engineering-foundations.
-2. Formal review decisions must be recorded for all seven contracts.
-3. Outstanding contract findings must be resolved.
-4. Validation responsibilities must be assigned and executed before any validation gate may pass.
+1. Formal review decisions must be recorded for all seven contracts.
+2. Outstanding contract findings must be resolved.
+3. Validation responsibilities must be assigned and executed before any validation gate may pass.
+4. The missing AMD64 and ARM64 hardware and firmware boundary matrices must be added.
 
 8. Authorization boundary
 
