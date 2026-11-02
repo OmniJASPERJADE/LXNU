@@ -53,7 +53,9 @@ It does not own general operating-system userspace integration, system service l
 
 OmniSilicon
 
-Owns AMD hardware discovery, capability reporting, hardware qualification, and validated platform profiles.
+Owns hardware discovery, capability reporting, hardware qualification, and validated platform profiles for both AMD64 Ryzen and ARM64 Soundwave targets.
+
+It provides the capability model for AMD64 and ARM64 profile discovery, including architecture-specific validation where the selected platform differs in hardware, firmware, or accelerator support.
 
 Omni Performance Libraries
 
