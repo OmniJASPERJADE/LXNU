@@ -10,7 +10,7 @@
 
 This document establishes the architectural ownership, responsibilities, interfaces, and integration boundaries of the System-One platform.
 
-System-One is an independent AMD64 Linux-based operating system and computing platform. Its architecture integrates a custom kernel engineering project, userspace software platform, workload orchestration, hardware capability discovery, and optimized subsystem libraries.
+System-One is an independent Linux-based operating system and computing platform. Its architecture integrates a custom kernel engineering project, userspace integration, workload orchestration, hardware capability discovery, and optimized subsystem libraries.
 
 The objective is to establish one coherent platform without duplicating responsibilities, creating competing control systems, or introducing undocumented dependencies.
 
@@ -34,7 +34,7 @@ System-One consists of six primary architectural domains.
 | LXNU | Kernel architecture and Linux upstream integration |
 | OmniSoft | Computer AI Research Foundation |
 | OmniRed | Workload orchestration and resource coordination |
-| OmniSilicon | AMD hardware discovery and qualification |
+| OmniSilicon | Hardware discovery, qualification, and accelerator integration |
 | Omni Performance Libraries | Optimized computational and media operations |
 
 These domains cooperate through documented interfaces. They are not six independent operating systems or competing kernels.
@@ -56,6 +56,7 @@ It is responsible for:
 - System services and lifecycle management.
 - Release engineering and hardware qualification.
 - System-wide compatibility and validation.
+- General userspace integration, application integration, and runtime compatibility.
 
 ### 3.2 Platform baseline
 
@@ -132,7 +133,7 @@ LXNU owns:
 - Upstream Linux version and revision tracking.
 - Downstream patch management.
 - Kernel configuration policy.
-- AMD64 platform integration.
+- AMD64 and ARM64 architecture-profile ownership through the canonical profile definitions.
 - Kernel-facing interfaces and contracts.
 - Kernel security integration.
 - Kernel build and validation requirements.
@@ -177,9 +178,9 @@ The selection and activation of each mechanism require compatibility testing and
 
 ### 5.1 Ownership
 
-OmniSoft owns the System-One userspace software platform and the Computer AI Research Foundation.
+OmniSoft owns the Computer AI Research Foundation.
 
-It is the primary AI research and computational research environment through which system services, runtime facilities, application integration, platform APIs, and research infrastructure are delivered.
+It is the primary AI research and computational research environment through which AI research architecture, runtime research infrastructure, algorithmic experimentation, and AI-specific platform services are delivered.
 
 ### 5.2 Responsibilities
 
@@ -187,30 +188,18 @@ OmniSoft owns:
 - AI research and computational research architecture.
 - Research runtime facilities and execution services.
 - AI model and algorithm integration infrastructure.
-- Userspace platform and software runtime.
-- Application-facing platform interfaces.
-- System service integration.
-- Runtime compatibility.
-- Developer-facing platform facilities.
-- Userspace hardware abstraction interfaces.
-- Platform libraries and supporting utilities.
+- AI-specific runtime infrastructure and research services.
+- Research-specific platform interfaces and toolchain considerations.
 
-### 5.3 Application and software integration
+It does not own general operating-system userspace integration, general system-service lifecycle, or general application integration. Those responsibilities remain within System-One OS.
 
-OmniSoft provides the integration environment for the System-One application and research ecosystem.
+### 5.3 Research and software integration
 
-This includes appropriate integration with:
-- OmniWorks.
-- Omni Graph.
-- Symphony.
-- Director's Cut.
-- Other creator and productivity applications.
-- System utilities and development tools.
-- AI research frameworks and execution environments.
+OmniSoft provides the integration environment for AI, computational research, and research-facing runtime infrastructure.
 
-Applications and research workloads must consume documented platform APIs.
+Applications and research workloads are not treated as general OS userspace integration responsibilities unless explicitly assigned by System-One OS.
 
-Applications must not directly assume ownership of kernel scheduling, hardware power policy, or system-wide resource allocation.
+Applications must consume documented platform APIs and must not directly assume ownership of kernel scheduling, hardware power policy, or system-wide resource allocation.
 
 ### 5.4 Runtime boundaries
 
@@ -255,7 +244,7 @@ LXNU and upstream Linux provide the kernel mechanisms and device interfaces.
 
 Omni Performance Libraries provide optimized computational operations.
 
-OmniSoft provides the userspace runtime and integration environment.
+System-One OS provides the general userspace integration context, runtime compatibility, and system-level platform coordination.
 
 OmniRed coordinates these capabilities without replacing their responsibilities.
 
@@ -271,18 +260,17 @@ Any integration requiring new kernel interfaces must be reviewed and implemented
 
 ### 7.1 Ownership
 
-OmniSilicon owns AMD hardware discovery, capability reporting, and platform qualification.
+OmniSilicon owns hardware discovery, capability reporting, and platform qualification for the selected platform profile.
 
 It provides a consistent hardware capability model to the rest of System-One.
 
 ### 7.2 Responsibilities
 
 OmniSilicon owns:
-- AMD processor identification.
+- Processor and accelerator identification.
 - CPU feature discovery.
-- Radeon GPU capability discovery.
-- RDNA architecture capability reporting.
-- XDNA NPU capability discovery where supported.
+- GPU capability discovery.
+- NPU capability discovery where supported.
 - Hardware topology reporting.
 - Supported device capability enumeration.
 - Hardware qualification data.
@@ -301,13 +289,13 @@ Discovering a device does not establish that its complete feature set is support
 
 A capability must not be advertised as production-ready until its complete software and hardware execution path has been validated.
 
-### 7.4 AMD platform requirements
+### 7.4 AMD64 platform requirements
 
-The production hardware target is AMD64.
+The AMD64 Ryzen profile is a production target for System-One.
 
 The platform prioritizes:
 - AMD Ryzen CPU architectures.
-- Radeon RDNA 3.5 and RDNA 4 where supported.
+- Radeon RDNA graphics where supported.
 - AMD XDNA NPU generations where supported.
 - AMDGPU and RADV integration.
 - Runtime CPU instruction-set discovery.
@@ -316,9 +304,9 @@ OmniSilicon must not assume every AMD processor or GPU exposes identical capabil
 
 ### 7.5 ARM64 platform requirements
 
-The ARM64 profile is a native production target.
+The ARM64 Soundwave profile is a native production target.
 
-- Processor and SoC selection is an explicit engineering decision and is not yet made.
+- Processor and SoC selection are explicit engineering decisions and are not yet made.
 - Capability discovery must enumerate the architecture baseline and only those optional features the selected platform actually implements.
 - GPU and NPU support require independently qualified backends; AMDGPU, RADV, and XDNA assumptions do not transfer to this profile.
 - No capability may be advertised on the basis of architecture alone.
@@ -370,14 +358,14 @@ An optimized code path is not automatically a faster code path.
 
 | Provider | Consumer | Contract |
 |---|---|---|
-| LXNU | OmniSoft | Kernel interfaces and userspace ABI |
+| LXNU | System-One OS | Kernel interfaces and userspace ABI |
 | LXNU | OmniRed | Supported resource and scheduling interfaces |
 | LXNU | OmniSilicon | Kernel-facing hardware and device interfaces |
 | OmniSilicon | OmniRed | Hardware capability and topology data |
-| OmniSilicon | OmniSoft | Userspace hardware capability information |
-| Omni Performance Libraries | OmniSoft | Reusable optimized operations |
+| OmniSilicon | System-One OS | Userspace hardware capability information |
+| Omni Performance Libraries | System-One OS | Reusable optimized operations |
 | Omni Performance Libraries | OmniRed | Validated execution capabilities |
-| OmniRed | OmniSoft | Workload coordination and resource-policy services |
+| OmniRed | System-One OS | Workload coordination and resource-policy services |
 | All domains | System-One OS | Platform integration and release contracts |
 
 All interfaces must define:
@@ -427,11 +415,11 @@ Additional constraints:
 Security responsibility is distributed but must remain clearly owned.
 
 - LXNU owns kernel-side security integration.
-- OmniSoft owns userspace runtime and service security.
+- System-One OS owns general userspace security integration, release security, and platform-level policy.
 - OmniRed must enforce authorization and resource-policy boundaries.
 - OmniSilicon must validate the provenance and reliability of hardware capability data.
 - Omni Performance Libraries must validate memory safety, input handling, and execution boundaries.
-- System-One OS owns platform-wide security integration and release requirements.
+- OmniSoft owns AI research and computational research security boundaries, runtime-specific security policies, and model execution safety where applicable.
 
 No component may bypass another component's security boundary through undocumented privileged access.
 
@@ -459,8 +447,8 @@ The intended dependency direction is:
 2. OmniSilicon discovers and qualifies available hardware capabilities.
 3. Omni Performance Libraries implement optimized operations.
 4. OmniRed coordinates eligible workloads and resources.
-5. OmniSoft integrates userspace services and application facilities.
-6. System-One OS integrates the complete platform and user experience.
+5. System-One OS integrates the general userspace platform, services, and application compatibility.
+6. OmniSoft provides AI research and computational research runtime capabilities and AI-specific services.
 
 These are logical ownership relationships, not a requirement that every operation execute in a strict serial order.
 
@@ -510,15 +498,15 @@ System-One is engineered as one integrated platform with distinct, accountable c
 
 LXNU provides the kernel foundation.
 
+System-One OS owns the general userspace platform, service lifecycle, and system integration.
+
 OmniSoft provides the AI research and computational research platform.
 
 OmniRed coordinates workloads and heterogeneous resources.
 
-OmniSilicon identifies and qualifies AMD hardware capabilities.
+OmniSilicon identifies and qualifies hardware capabilities for the selected platform profile.
 
 Omni Performance Libraries provide optimized and validated computational operations.
-
-System-One OS integrates these domains into one complete operating system.
 
 **One platform. Clear ownership. Explicit interfaces. Measured results.**
 
