@@ -11,14 +11,16 @@ Merge authorization: NOT GRANTED
 
 This document records the formal Phase 3 contract review gate before implementation begins.
 
-This checklist is a documentation-only gate. It documents the required review outcomes for the engineering-foundation package and preserves the architecture ownership boundaries without implying implementation readiness, validation success, or merge approval.
+This checklist is the canonical source for Phase 3 review findings, dispositions, and validation status. It documents the required review outcomes for the engineering-foundation package and preserves the architecture ownership boundaries without implying implementation readiness, validation success, or merge approval.
+
+The older Phase 3 review record remains for compatibility only and does not maintain a competing review verdict.
 
 2. Preflight status
 
 - Branch confirmed: phase3-engineering-foundations
-- Repository write access: confirmed for documentation commit on the target branch
+- Repository write access: not independently claimed for this task; no write-status assertion is used to approve the review
 - Working tree status: not used to claim implementation; no unrelated files modified
-- Seven Phase 3 foundation documents reviewed before checklist construction:
+- Nine Phase 3 foundation documents reviewed before checklist construction:
   - docs/development/subsystem-interface-contracts.md
   - docs/development/kernel-userspace-abi.md
   - docs/development/system-one-runtime-services.md
@@ -26,6 +28,8 @@ This checklist is a documentation-only gate. It documents the required review ou
   - docs/development/omnisilicon-capability-contract.md
   - docs/development/omnisoft-ai-runtime-boundaries.md
   - docs/development/omni-performance-libraries-dispatch.md
+  - docs/development/amd64-ryzen-hardware-firmware-matrix.md
+  - docs/development/arm64-soundwave-hardware-firmware-matrix.md
 
 3. Review rules
 
@@ -42,6 +46,7 @@ The following requirements apply:
 - Validation evidence must be recorded before a gate can be marked as passed.
 - Validation status must remain NOT RUN until evidence exists.
 - No subsystem implementation or merge authorization is granted by this checklist.
+- Document inspection is distinct from formal approval and executed validation.
 
 4. Contract review inventory
 
@@ -59,8 +64,8 @@ Checklist:
 
 Disposition: CHANGES REQUIRED
 Findings:
-- The dependency sequence is directionally correct, but it is not yet a sufficiently explicit dependency graph.
-- The document specifies an eighth deliverable (AMD64 and ARM64 hardware and firmware boundary matrices) that is not yet present in the branch.
+- The dependency model is directionally correct, but it is not yet a sufficiently explicit dependency graph.
+- The graph has been formalized in the current branch revision.
 - The contract remains a foundation specification, not a validated interface set.
 
 Required changes:
@@ -71,7 +76,7 @@ Required changes:
 Reviewer: Unassigned
 Review date: Not recorded
 Evidence: Document inspection and architecture ownership mapping only; no completed validation
-Final rationale: Useful engineering foundation, but not yet formally approved and still missing explicit dependency graph and profile matrices
+Final rationale: Useful engineering foundation, but not yet formally approved and still subject to explicit review
 
 ## 4.2 Kernel and userspace ABI
 
@@ -224,17 +229,68 @@ Checklist:
 Disposition: CHANGES REQUIRED
 Findings:
 - Scalar fallback is specified, but the AMD64 x86-64-v3 baseline, optional x86-64-v4 dispatch, and OS extended-state checks need to be explicit in the contract itself.
-- Contract is still not a complete implementation-ready dispatch policy.
+- The architecture profile matrices now make those expectations clearer, but the contracts still require formal review.
 
 Required changes:
-- Make the x86-64-v3 and optional x86-64-v4 baseline requirements explicit in the contract.
+- Make x86-64-v3 and optional x86-64-v4 baseline requirements explicit in the contract.
 - Specify OS extended-state and runtime feature-detection acceptance criteria.
 - Assign reviewer and review date.
 
 Reviewer: Unassigned
 Review date: Not recorded
 Evidence: Document inspection only; no performance or dispatch validation evidence recorded
-Final rationale: Good safety intent, but not yet explicit enough for formal acceptance
+Final rationale: Good safety intent, but not yet explicit enough or formally accepted
+
+## 4.8 AMD64 Ryzen hardware and firmware matrix
+
+File: docs/development/amd64-ryzen-hardware-firmware-matrix.md
+
+Checklist:
+- [x] AMD64 architecture profile is defined.
+- [x] x86-64-v3 baseline is recorded as the safe baseline.
+- [x] Optional x86-64-v4 is conditional on feature detection and XCR0 / OS extended-state verification.
+- [x] Ryzen CPU identity, topology, firmware and boot criteria are identified.
+- [x] Radeon and XDNA device handling is documented as conditional and not assumed.
+- [x] Hardware qualification remains explicitly NOT QUALIFIED until evidence exists.
+
+Disposition: CHANGES REQUIRED
+Findings:
+- The matrix is present but has not been formally reviewed.
+- Qualified hardware evidence remains absent.
+
+Required changes:
+- Review the matrix against the target hardware and firmware reality before approval.
+- Assign reviewer and review date.
+
+Reviewer: Unassigned
+Review date: Not recorded
+Evidence: Document inspection only; hardware qualification remains unexecuted
+Final rationale: Necessary architecture profile record, but not yet evidence-backed or formally reviewed
+
+## 4.9 ARM64 Soundwave hardware and firmware matrix
+
+File: docs/development/arm64-soundwave-hardware-firmware-matrix.md
+
+Checklist:
+- [x] ARM64 architecture profile is defined.
+- [x] Vendor, SoC, board, firmware, and support assumptions are separated from AMD64 assumptions.
+- [x] Unselected hardware fields are left as NOT SELECTED.
+- [x] Bootloader and firmware requirements are documented as explicitly qualified.
+- [x] Hardware qualification remains explicitly NOT QUALIFIED until evidence exists.
+
+Disposition: CHANGES REQUIRED
+Findings:
+- The matrix is present but has not been formally reviewed.
+- Independent ARM64 evidence remains absent.
+
+Required changes:
+- Review the matrix against the target SoC and board reality before approval.
+- Assign reviewer and review date.
+
+Reviewer: Unassigned
+Review date: Not recorded
+Evidence: Document inspection only; hardware qualification remains unexecuted
+Final rationale: Required architecture profile record, but not yet evidence-backed or formally reviewed
 
 5. Cross-contract review gates
 
@@ -275,7 +331,7 @@ All unexecuted validation items remain NOT RUN until the corresponding validatio
 Overall Phase 3 disposition: CHANGES REQUIRED
 
 Checklist status:
-- [x] All seven contracts are cataloged.
+- [x] All nine Phase 3 documents are cataloged.
 - [x] All contract dispositions are captured as CHANGES REQUIRED or PENDING.
 - [x] Outstanding findings are documented.
 - [x] Validation responsibilities remain explicitly unassigned and unexecuted.
@@ -289,7 +345,7 @@ Outstanding blockers:
 1. Formal review decisions must be recorded for all seven contracts.
 2. Outstanding contract findings must be resolved.
 3. Validation responsibilities must be assigned and executed before any validation gate may pass.
-4. The missing AMD64 and ARM64 hardware and firmware boundary matrices must be added.
+4. The AMD64 and ARM64 hardware and firmware matrices must be reviewed against the actual target hardware and firmware reality.
 
 8. Authorization boundary
 
