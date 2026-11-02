@@ -219,7 +219,7 @@ It must not:
 
 OmniRed owns workload orchestration and heterogeneous resource coordination.
 
-Its purpose is to coordinate how eligible workloads use the available AMD CPU, GPU, and NPU resources.
+Its purpose is to coordinate how eligible workloads use the available CPU, GPU, and accelerator resources across the selected platform profile.
 
 ### 6.2 Responsibilities
 
