@@ -29,7 +29,7 @@ Linux upstream provides:
 - Synchronization primitives and core kernel facilities.
 - Hardware and platform support.
 
-LXNU maintains its own architecture, integration contracts, AMD platform policy, configuration, downstream patches, and validation requirements.
+LXNU maintains its own architecture, integration contracts, architecture-profile policy, configuration, downstream patches, and validation requirements.
 
 It must not duplicate mature Linux functionality without a documented engineering justification.
 
@@ -37,7 +37,7 @@ It must not duplicate mature Linux functionality without a documented engineerin
 
 LXNU
 
-Owns kernel architecture, integration interfaces, downstream patch policy, AMD platform integration, security integration, and kernel validation.
+Owns kernel architecture, integration interfaces, downstream patch policy, architecture-profile ownership across both AMD64 and ARM64, security integration, and kernel validation.
 
 OmniRed
 
@@ -47,7 +47,9 @@ OmniRed does not replace or independently duplicate the Linux scheduler.
 
 OmniSoft
 
-Owns userspace platform integration, runtime services, application-facing interfaces, and operating-system service coordination.
+Owns the Computer AI Research Foundation, including AI research, computational research architecture, algorithmic and runtime research infrastructure, and AI-specific platform services.
+
+It does not own general operating-system userspace integration, system service lifecycle, or application integration; those remain within System-One OS.
 
 OmniSilicon
 
